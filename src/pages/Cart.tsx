@@ -47,7 +47,7 @@ const Cart = () => {
   return (
     <>
       <Helmet>
-        <title>Cart ({items.length}) | Shopping Zilla</title>
+        <title>{`Cart (${items.length}) | Shopping Zilla`}</title>
       </Helmet>
 
       <div className="min-h-screen bg-background">

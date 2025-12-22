@@ -6,10 +6,10 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About | Urban Wear - Premium Streetwear</title>
+        <title>About | Shopping Zilla - Premium Fashion Pakistan</title>
         <meta
           name="description"
-          content="Learn about Urban Wear's mission to redefine urban fashion with premium quality streetwear."
+          content="Learn about Shopping Zilla's mission to bring premium quality fashion to Pakistan at affordable prices."
         />
       </Helmet>
 
@@ -22,11 +22,11 @@ const About = () => {
             <div className="max-w-4xl mx-auto text-center mb-20">
               <p className="text-primary text-sm uppercase tracking-widest mb-4">Our Story</p>
               <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-8">
-                Redefining <span className="text-gradient-gold">Urban Fashion</span>
+                Pakistan's <span className="text-gradient-gold">Fashion Destination</span>
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Born from the streets, crafted for those who dare to stand out. Urban Wear represents
-                the fusion of luxury craftsmanship and authentic street culture.
+                Founded with a passion for quality and style, Shopping Zilla brings premium fashion 
+                to every corner of Pakistan. From Karachi to Lahore, Islamabad to Peshawar.
               </p>
             </div>
 
@@ -34,7 +34,7 @@ const About = () => {
             <div className="relative rounded-xl overflow-hidden aspect-[21/9] mb-20">
               <img
                 src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&h=700&fit=crop"
-                alt="Urban Wear Store"
+                alt="Shopping Zilla Store"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent flex items-center">
@@ -54,19 +54,19 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
               {[
                 {
-                  title: "Craftsmanship",
+                  title: "Quality First",
                   description:
-                    "Every stitch tells a story. We work with master craftsmen to ensure exceptional quality.",
+                    "We source the finest fabrics and materials to ensure every piece meets our high standards.",
                 },
                 {
-                  title: "Sustainability",
+                  title: "Affordable Luxury",
                   description:
-                    "Committed to ethical production and sustainable materials for a better future.",
+                    "Premium fashion shouldn't break the bank. We offer quality at prices that work for everyone.",
                 },
                 {
-                  title: "Community",
+                  title: "Nationwide Delivery",
                   description:
-                    "More than a brand, we're a movement. Join our community of urban pioneers.",
+                    "From major cities to small towns, we deliver across all of Pakistan with care.",
                 },
               ].map((value) => (
                 <div key={value.title} className="glass rounded-xl p-8 text-center">
@@ -82,10 +82,10 @@ const About = () => {
             <div className="glass rounded-xl p-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 {[
-                  { value: "2019", label: "Founded" },
-                  { value: "50K+", label: "Customers" },
+                  { value: "2020", label: "Founded" },
+                  { value: "50K+", label: "Happy Customers" },
                   { value: "200+", label: "Products" },
-                  { value: "15", label: "Countries" },
+                  { value: "100+", label: "Cities Served" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <p className="font-display text-4xl font-bold text-primary mb-2">

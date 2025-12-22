@@ -15,7 +15,7 @@ const Cart = () => {
     return (
       <>
         <Helmet>
-          <title>Cart | Urban Wear</title>
+          <title>Cart | Shopping Zilla</title>
         </Helmet>
 
         <div className="min-h-screen bg-background">
@@ -47,7 +47,7 @@ const Cart = () => {
   return (
     <>
       <Helmet>
-        <title>Cart ({items.length}) | Urban Wear</title>
+        <title>Cart ({items.length}) | Shopping Zilla</title>
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -120,7 +120,7 @@ const Cart = () => {
                           </Button>
                         </div>
                         <span className="text-lg font-semibold text-primary">
-                          ${item.price * item.quantity}
+                          Rs. {(item.price * item.quantity).toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -137,16 +137,16 @@ const Cart = () => {
                   <div className="space-y-4 mb-8">
                     <div className="flex justify-between text-muted-foreground">
                       <span>Subtotal</span>
-                      <span>${totalPrice}</span>
+                      <span>Rs. {totalPrice.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Shipping</span>
-                      <span>{totalPrice >= 150 ? "Free" : "$15"}</span>
+                      <span>Delivery</span>
+                      <span>{totalPrice >= 5000 ? "Free" : "Rs. 250"}</span>
                     </div>
                     <div className="border-t border-border pt-4 flex justify-between text-lg font-semibold text-foreground">
                       <span>Total</span>
                       <span className="text-primary">
-                        ${totalPrice >= 150 ? totalPrice : totalPrice + 15}
+                        Rs. {(totalPrice >= 5000 ? totalPrice : totalPrice + 250).toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -174,7 +174,7 @@ const Cart = () => {
                   )}
 
                   <p className="text-center text-xs text-muted-foreground mt-6">
-                    Free shipping on orders over $150
+                    Free delivery on orders over Rs. 5,000
                   </p>
                 </div>
               </div>

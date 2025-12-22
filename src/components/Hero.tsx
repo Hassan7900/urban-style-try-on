@@ -26,15 +26,15 @@ const Hero = () => {
 
           {/* Heading */}
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 animate-fade-up" style={{ animationDelay: "100ms" }}>
-            <span className="text-foreground">Redefine</span>
+            <span className="text-foreground">Pakistan's</span>
             <br />
-            <span className="text-gradient-gold">Urban Style</span>
+            <span className="text-gradient-gold">Fashion Hub</span>
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: "200ms" }}>
-            Premium streetwear crafted for those who dare to stand out. 
-            Experience luxury urban fashion with our exclusive collection.
+            Premium quality fashion at unbeatable prices. 
+            From Karachi to Peshawar, we deliver style to your doorstep.
           </p>
 
           {/* CTAs */}
@@ -57,7 +57,7 @@ const Hero = () => {
             {[
               { value: "50K+", label: "Happy Customers" },
               { value: "200+", label: "Products" },
-              { value: "98%", label: "Satisfaction" },
+              { value: "100+", label: "Cities Served" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <p className="font-display text-2xl md:text-3xl font-bold text-primary">{stat.value}</p>

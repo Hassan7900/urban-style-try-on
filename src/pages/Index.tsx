@@ -10,10 +10,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Urban Wear | Premium Streetwear & Luxury Urban Fashion</title>
+        <title>Shopping Zilla | Pakistan's Premium Fashion Store</title>
         <meta
           name="description"
-          content="Shop Urban Wear for premium streetwear and luxury urban fashion. Hoodies, jackets, sneakers & more. Free shipping on orders over $150."
+          content="Shop at Shopping Zilla for premium fashion in Pakistan. Hoodies, jackets, sneakers & more. Free delivery on orders over Rs. 5000."
         />
       </Helmet>
 

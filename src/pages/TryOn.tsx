@@ -89,7 +89,7 @@ const TryOn = () => {
   const downloadImage = () => {
     if (capturedImage) {
       const link = document.createElement("a");
-      link.download = `urbanwear-tryon-${selectedProduct.name.toLowerCase().replace(/\s+/g, "-")}.png`;
+      link.download = `shoppingzilla-tryon-${selectedProduct.name.toLowerCase().replace(/\s+/g, "-")}.png`;
       link.href = capturedImage;
       link.click();
     }
@@ -121,10 +121,10 @@ const TryOn = () => {
   return (
     <>
       <Helmet>
-        <title>Virtual Try-On | Urban Wear</title>
+        <title>Virtual Try-On | Shopping Zilla</title>
         <meta
           name="description"
-          content="Try on Urban Wear clothes virtually using your webcam. See how our premium streetwear looks on you before you buy."
+          content="Try on Shopping Zilla clothes virtually using your webcam. See how our premium fashion looks on you before you buy."
         />
       </Helmet>
 
@@ -245,7 +245,7 @@ const TryOn = () => {
                       <p className="font-display text-lg font-semibold text-foreground">
                         {selectedProduct.name}
                       </p>
-                      <p className="text-primary font-semibold">${selectedProduct.price}</p>
+                      <p className="text-primary font-semibold">Rs. {selectedProduct.price.toLocaleString()}</p>
                     </div>
                   </div>
 

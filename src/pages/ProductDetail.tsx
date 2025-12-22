@@ -40,7 +40,7 @@ const ProductDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{product.name} | Urban Wear</title>
+        <title>{product.name} | Shopping Zilla</title>
         <meta name="description" content={product.description} />
       </Helmet>
 
@@ -91,13 +91,13 @@ const ProductDetail = () => {
                   <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
                     {product.name}
                   </h1>
-                  <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4">
                     <span className="text-3xl font-bold text-primary">
-                      ${product.price}
+                      Rs. {product.price.toLocaleString()}
                     </span>
                     {product.originalPrice && (
                       <span className="text-xl text-muted-foreground line-through">
-                        ${product.originalPrice}
+                        Rs. {product.originalPrice.toLocaleString()}
                       </span>
                     )}
                   </div>

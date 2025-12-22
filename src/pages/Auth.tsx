@@ -90,7 +90,7 @@ const Auth = () => {
   return (
     <>
       <Helmet>
-        <title>{isLogin ? "Sign In" : "Create Account"} | Shopping Zilla</title>
+        <title>{`${isLogin ? "Sign In" : "Create Account"} | Shopping Zilla`}</title>
       </Helmet>
 
       <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">

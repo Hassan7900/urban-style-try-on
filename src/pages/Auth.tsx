@@ -90,7 +90,7 @@ const Auth = () => {
   return (
     <>
       <Helmet>
-        <title>{isLogin ? "Sign In" : "Create Account"} | Urban Wear</title>
+        <title>{isLogin ? "Sign In" : "Create Account"} | Shopping Zilla</title>
       </Helmet>
 
       <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
@@ -99,7 +99,7 @@ const Auth = () => {
           <div className="text-center mb-10">
             <a href="/" className="inline-block">
               <span className="font-display text-3xl font-bold text-gradient-gold">
-                URBAN WEAR
+                SHOPPING ZILLA
               </span>
             </a>
           </div>
@@ -112,7 +112,7 @@ const Auth = () => {
             <p className="text-muted-foreground text-center mb-8">
               {isLogin
                 ? "Sign in to access your account"
-                : "Join Urban Wear for exclusive access"}
+                : "Join Shopping Zilla for exclusive deals"}
             </p>
 
             {error && (

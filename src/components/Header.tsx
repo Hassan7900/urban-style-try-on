@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingBag, User, Menu, X, Search } from "lucide-react";
+import { ShoppingBag, User, Menu, X, Search, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { totalItems } = useCart();
   const { user, signOut } = useAuth();
+  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
   const navLinks = [
@@ -47,6 +49,19 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" className="hidden md:flex">
               <Search className="h-5 w-5" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="hidden md:flex"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
             </Button>
 
             {user ? (
@@ -118,6 +133,25 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+
+          {/* Mobile Theme Toggle */}
+          <Button
+            variant="ghost"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="justify-start text-lg font-medium text-foreground hover:text-primary transition-colors py-2"
+          >
+            {theme === "dark" ? (
+              <>
+                <Sun className="h-5 w-5 mr-2" />
+                Light Mode
+              </>
+            ) : (
+              <>
+                <Moon className="h-5 w-5 mr-2" />
+                Dark Mode
+              </>
+            )}
+          </Button>
         </nav>
       </div>
     </header>

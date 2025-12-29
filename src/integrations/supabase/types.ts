@@ -52,6 +52,65 @@ export type Database = {
           }
         ]
       }
+      seller_products: {
+        Row: {
+          id: string
+          seller_id: string
+          name: string
+          description: string | null
+          price: number
+          original_price: number | null
+          image: string | null
+          category: string
+          sizes: string[]
+          colors: string[]
+          in_stock: boolean
+          try_on_compatible: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          seller_id: string
+          name: string
+          description?: string | null
+          price: number
+          original_price?: number | null
+          image?: string | null
+          category: string
+          sizes?: string[]
+          colors?: string[]
+          in_stock?: boolean
+          try_on_compatible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          seller_id?: string
+          name?: string
+          description?: string | null
+          price?: number
+          original_price?: number | null
+          image?: string | null
+          category?: string
+          sizes?: string[]
+          colors?: string[]
+          in_stock?: boolean
+          try_on_compatible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seller_products_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

@@ -15,7 +15,7 @@ const Cart = () => {
     return (
       <>
         <Helmet>
-          <title>Cart | Shopping Zilla</title>
+          <title>Cart | Urban Wear</title>
         </Helmet>
 
         <div className="min-h-screen bg-background">
@@ -47,7 +47,7 @@ const Cart = () => {
   return (
     <>
       <Helmet>
-        <title>{`Cart (${items.length}) | Shopping Zilla`}</title>
+        <title>{`Cart (${items.length}) | Urban Wear`}</title>
       </Helmet>
 
       <div className="min-h-screen bg-background">

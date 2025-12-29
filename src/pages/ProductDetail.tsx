@@ -40,7 +40,7 @@ const ProductDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{product.name} | Shopping Zilla</title>
+        <title>{product.name} | Urban Wear</title>
         <meta name="description" content={product.description} />
       </Helmet>
 

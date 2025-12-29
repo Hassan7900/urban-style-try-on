@@ -1,73 +1,134 @@
-# Welcome to your Lovable project
+```markdown
+# Urban Style Try-On
 
-## Project info
+A React-based virtual try-on application for urban fashion, allowing users to visualize clothing items in real-time.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Features
 
-## How can I edit this code?
+- **Virtual Try-On**: Upload images and try on different urban fashion items
+- **Real-time Visualization**: See clothing items rendered on your image
+- **Modern UI**: Clean, responsive interface built with Tailwind CSS
+- **Type Safety**: Full TypeScript support for better development experience
+- **Fast Performance**: Built with Vite for optimal build times and HMR
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **React 18** - Frontend library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+- **Supabase** - Backend services
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 📦 Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js 18.0 or higher
+- npm 9.0 or higher
 
-**Use your preferred IDE**
+## 🔧 Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/urban-style-try-on.git
+   cd urban-style-try-on
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Follow these steps:
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Update the `.env.local` file with your Supabase credentials.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+5. **Open your browser**
+   Navigate to `http://localhost:5173`
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 📁 Project Structure
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+urban-style-try-on/
+├── public/          # Static assets
+├── src/            # Source code
+│   ├── components/ # React components
+│   ├── lib/        # Utilities and helpers
+│   ├── pages/      # Page components
+│   ├── styles/     # Global styles
+│   └── types/      # TypeScript definitions
+├── supabase/       # Supabase configurations
+└── public/         # Public assets
 ```
 
-**Edit a file directly in GitHub**
+## 🚀 Available Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run type-check` - TypeScript type checking
 
-**Use GitHub Codespaces**
+## 🏗️ Building for Production
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run build
+```
 
-## What technologies are used for this project?
+The built files will be in the `dist` directory, ready for deployment.
 
-This project is built with:
+## 🧪 Testing
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+# Run tests
+npm test
 
-## How can I deploy this project?
+# Run tests in watch mode
+npm run test:watch
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+# Run tests with coverage
+npm run test:coverage
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 📝 Environment Variables
 
-Yes, you can!
+Create a `.env.local` file with the following variables:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🔗 API Integration
+
+This project uses Supabase for:
+- User authentication
+- Database operations
+- File storage
+- Real-time subscriptions
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request 
+
+## 🆘 Support
+
+For support, email lagend452@gmail.com or open an issue in the GitHub repository.
+
+## 🙏 Acknowledgments
+
+- [Vite](https://vitejs.dev/) for the amazing build tool
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [shadcn/ui](https://ui.shadcn.com/) for UI components
+- [Supabase](https://supabase.com/) for backend services
+```

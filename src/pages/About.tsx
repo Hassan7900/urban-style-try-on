@@ -6,10 +6,10 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About | Shopping Zilla - Premium Fashion Pakistan</title>
+        <title>About | Urban Wear - Premium Fashion Pakistan</title>
         <meta
           name="description"
-          content="Learn about Shopping Zilla's mission to bring premium quality fashion to Pakistan at affordable prices."
+          content="Learn about Urban Wear's mission to bring premium quality fashion to Pakistan at affordable prices."
         />
       </Helmet>
 
@@ -25,7 +25,7 @@ const About = () => {
                 Pakistan's <span className="text-gradient-gold">Fashion Destination</span>
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Founded with a passion for quality and style, Shopping Zilla brings premium fashion 
+                Founded with a passion for quality and style, Urban Wear brings premium fashion 
                 to every corner of Pakistan. From Karachi to Lahore, Islamabad to Peshawar.
               </p>
             </div>
@@ -34,7 +34,7 @@ const About = () => {
             <div className="relative rounded-xl overflow-hidden aspect-[21/9] mb-20">
               <img
                 src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&h=700&fit=crop"
-                alt="Shopping Zilla Store"
+                alt="Urban Wear Store"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent flex items-center">

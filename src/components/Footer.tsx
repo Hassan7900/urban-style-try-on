@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <h3 className="font-display text-2xl font-bold text-gradient-gold">
-              SHOPPING ZILLA
+              URBAN WEAR
             </h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Pakistan's premium fashion destination. Quality clothing at affordable prices, delivered nationwide.
@@ -73,7 +73,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2024 Shopping Zilla. All rights reserved.
+            © 2024 Urban Wear. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link to="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">

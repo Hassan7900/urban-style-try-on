@@ -26,7 +26,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span className="font-display text-2xl font-bold text-gradient-gold">
-              SHOPPING ZILLA
+              URBAN WEAR
             </span>
           </Link>
 

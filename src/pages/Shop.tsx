@@ -19,7 +19,7 @@ const Shop = () => {
   return (
     <>
       <Helmet>
-        <title>Shop | Shopping Zilla Premium Fashion Collection</title>
+        <title>Shop | Urban Wear Premium Fashion Collection</title>
         <meta
           name="description"
           content="Browse our full collection of premium fashion. Hoodies, jackets, pants, sneakers and accessories. Free delivery on orders over Rs. 5,000."

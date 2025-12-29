@@ -121,10 +121,10 @@ const TryOn = () => {
   return (
     <>
       <Helmet>
-        <title>Virtual Try-On | Shopping Zilla</title>
+        <title>Virtual Try-On | Urban Wear</title>
         <meta
           name="description"
-          content="Try on Shopping Zilla clothes virtually using your webcam. See how our premium fashion looks on you before you buy."
+          content="Try on Urban Wear clothes virtually using your webcam. See how our premium fashion looks on you before you buy."
         />
       </Helmet>
 

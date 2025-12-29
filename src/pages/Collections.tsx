@@ -33,10 +33,10 @@ const Collections = () => {
   return (
     <>
       <Helmet>
-        <title>Collections | Shopping Zilla Premium Fashion</title>
+        <title>Collections | Urban Wear Premium Fashion</title>
         <meta
           name="description"
-          content="Explore Shopping Zilla's curated collections. From timeless essentials to limited edition drops."
+          content="Explore Urban Wear's curated collections. From timeless essentials to limited edition drops."
         />
       </Helmet>
 

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { totalItems } = useCart();
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ const Header = () => {
     { href: "/collections", label: "Collections" },
     { href: "/try-on", label: "Virtual Try-On" },
     { href: "/about", label: "About" },
+    ...(profile?.role === 'seller' ? [{ href: "/seller-dashboard", label: "Dashboard" }] : []),
   ];
 
   return (
@@ -66,9 +67,16 @@ const Header = () => {
 
             {user ? (
               <div className="flex items-center gap-2">
-                <span className="hidden md:block text-sm text-muted-foreground">
-                  {user.email?.split("@")[0]}
-                </span>
+                <div className="hidden md:flex flex-col items-end">
+                  <span className="text-sm text-muted-foreground">
+                    {profile?.first_name || user.email?.split("@")[0]}
+                  </span>
+                  {profile?.role && (
+                    <span className="text-xs text-primary capitalize">
+                      {profile.role}
+                    </span>
+                  )}
+                </div>
                 <Button
                   variant="ghost"
                   size="sm"

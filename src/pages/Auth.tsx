@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Mail, Lock, ArrowRight, AlertCircle, User, Phone, Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight, AlertCircle, User, Phone, Eye, EyeOff, CheckCircle, Loader2, ShoppingBag, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +29,7 @@ const signupSchema = z.object({
   phone: z.string().min(10, "Phone number must be at least 10 digits").max(15, "Phone number too long").regex(/^[0-9]+$/, "Phone number must contain only digits"),
   password: z.string().min(8, "Password must be at least 8 characters").regex(/[A-Z]/, "Password must contain at least one uppercase letter").regex(/[a-z]/, "Password must contain at least one lowercase letter").regex(/[0-9]/, "Password must contain at least one number"),
   confirmPassword: z.string(),
+  role: z.enum(["buyer", "seller"], "Please select a role"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
@@ -53,6 +54,7 @@ const Auth = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<"buyer" | "seller">("buyer");
   
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -87,7 +89,7 @@ const Auth = () => {
       if (isLogin) {
         loginSchema.parse({ email, password });
       } else {
-        signupSchema.parse({ firstName, lastName, email, phone, password, confirmPassword });
+        signupSchema.parse({ firstName, lastName, email, phone, password, confirmPassword, role });
       }
       return true;
     } catch (e) {
@@ -119,7 +121,12 @@ const Auth = () => {
           }
         }
       } else {
-        const { error } = await signUp(email, password);
+        const { error } = await signUp(email, password, {
+          firstName,
+          lastName,
+          phone: countryCode + phone,
+          role,
+        });
         if (error) {
           if (error.message.includes("User already registered")) {
             setError("This email is already registered. Try signing in instead.");
@@ -134,6 +141,7 @@ const Auth = () => {
           setLastName("");
           setPhone("");
           setConfirmPassword("");
+          setRole("buyer");
         }
       }
     } catch (err) {
@@ -150,6 +158,7 @@ const Auth = () => {
     setPhone("");
     setPassword("");
     setConfirmPassword("");
+    setRole("buyer");
     setError("");
     setSuccess("");
   };
@@ -343,6 +352,49 @@ const Auth = () => {
                         required={!isLogin}
                       />
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Role Selection - Only show on signup */}
+              {!isLogin && (
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    I want to join as a
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setRole("buyer")}
+                      className={cn(
+                        "flex items-center gap-3 p-4 border-2 rounded-lg transition-all hover:shadow-md",
+                        role === "buyer"
+                          ? "border-primary bg-primary/5 text-primary"
+                          : "border-border bg-secondary text-muted-foreground hover:border-primary/50"
+                      )}
+                    >
+                      <ShoppingBag className="h-5 w-5" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Buyer</div>
+                        <div className="text-xs opacity-75">Shop & Purchase</div>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRole("seller")}
+                      className={cn(
+                        "flex items-center gap-3 p-4 border-2 rounded-lg transition-all hover:shadow-md",
+                        role === "seller"
+                          ? "border-primary bg-primary/5 text-primary"
+                          : "border-border bg-secondary text-muted-foreground hover:border-primary/50"
+                      )}
+                    >
+                      <Store className="h-5 w-5" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Seller</div>
+                        <div className="text-xs opacity-75">Sell Products</div>
+                      </div>
+                    </button>
                   </div>
                 </div>
               )}

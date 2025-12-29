@@ -16,6 +16,7 @@ import Auth from "./pages/Auth";
 import TryOn from "./pages/TryOn";
 import Collections from "./pages/Collections";
 import About from "./pages/About";
+import SellerDashboard from "./pages/SellerDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
                   <Route path="/try-on" element={<TryOn />} />
                   <Route path="/collections" element={<Collections />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/seller-dashboard" element={<SellerDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Chatbot />

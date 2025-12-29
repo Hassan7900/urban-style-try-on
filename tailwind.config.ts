@@ -58,14 +58,15 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
+          DEFAULT: "hsl(var(--lavender))",
+          light: "hsl(var(--lavender-light))",
         },
-        champagne: "hsl(var(--champagne))",
-        charcoal: {
-          DEFAULT: "hsl(var(--charcoal))",
-          light: "hsl(var(--charcoal-light))",
+        sage: {
+          DEFAULT: "hsl(var(--sage))",
+          light: "hsl(var(--sage-light))",
         },
+        peach: "hsl(var(--peach))",
+        cream: "hsl(var(--cream))",
       },
       fontFamily: {
         display: ["Playfair Display", "serif"],

@@ -19,6 +19,7 @@ import About from "./pages/About";
 import SizeGuide from "./pages/SizeGuide";
 import Shipping from "./pages/Shipping";
 import Returns from "./pages/Returns";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import SellerDashboard from "./pages/SellerDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +47,7 @@ const App = () => (
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/shipping" element={<Shipping />} />
                   <Route path="/returns" element={<Returns />} />
+                  <Route path="/order-confirmation" element={<OrderConfirmation />} />
                   <Route path="/seller-dashboard" element={<SellerDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

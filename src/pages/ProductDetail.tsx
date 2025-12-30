@@ -5,6 +5,7 @@ import { ArrowLeft, Minus, Plus, Camera, Heart } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
@@ -103,9 +104,105 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  {product.description}
-                </p>
+                {/* Product Details Tabs */}
+                <Tabs defaultValue="description" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="description">Description</TabsTrigger>
+                    <TabsTrigger value="size-guide">Size Guide</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="description" className="mt-6">
+                    <p className="text-muted-foreground text-lg leading-relaxed">
+                      {product.description}
+                    </p>
+                  </TabsContent>
+                  <TabsContent value="size-guide" className="mt-6">
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-display text-lg font-semibold text-foreground mb-4">
+                          Size Chart
+                        </h4>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse border border-border">
+                            <thead>
+                              <tr className="bg-muted">
+                                <th className="border border-border px-4 py-2 text-left font-medium">Size</th>
+                                <th className="border border-border px-4 py-2 text-left font-medium">Chest (inches)</th>
+                                <th className="border border-border px-4 py-2 text-left font-medium">Waist (inches)</th>
+                                <th className="border border-border px-4 py-2 text-left font-medium">Length (inches)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td className="border border-border px-4 py-2 font-medium">S</td>
+                                <td className="border border-border px-4 py-2">36-38</td>
+                                <td className="border border-border px-4 py-2">28-30</td>
+                                <td className="border border-border px-4 py-2">27</td>
+                              </tr>
+                              <tr className="bg-muted/50">
+                                <td className="border border-border px-4 py-2 font-medium">M</td>
+                                <td className="border border-border px-4 py-2">38-40</td>
+                                <td className="border border-border px-4 py-2">30-32</td>
+                                <td className="border border-border px-4 py-2">28</td>
+                              </tr>
+                              <tr>
+                                <td className="border border-border px-4 py-2 font-medium">L</td>
+                                <td className="border border-border px-4 py-2">40-42</td>
+                                <td className="border border-border px-4 py-2">32-34</td>
+                                <td className="border border-border px-4 py-2">29</td>
+                              </tr>
+                              <tr className="bg-muted/50">
+                                <td className="border border-border px-4 py-2 font-medium">XL</td>
+                                <td className="border border-border px-4 py-2">42-44</td>
+                                <td className="border border-border px-4 py-2">34-36</td>
+                                <td className="border border-border px-4 py-2">30</td>
+                              </tr>
+                              <tr>
+                                <td className="border border-border px-4 py-2 font-medium">XXL</td>
+                                <td className="border border-border px-4 py-2">44-46</td>
+                                <td className="border border-border px-4 py-2">36-38</td>
+                                <td className="border border-border px-4 py-2">31</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-display text-lg font-semibold text-foreground mb-4">
+                          How to Measure
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-foreground">Chest</h5>
+                            <p className="text-sm text-muted-foreground">
+                              Measure around the fullest part of your chest, keeping the tape horizontal.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-foreground">Waist</h5>
+                            <p className="text-sm text-muted-foreground">
+                              Measure around your natural waistline, which is usually just above the belly button.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-foreground">Length</h5>
+                            <p className="text-sm text-muted-foreground">
+                              Measure from the highest point of the shoulder to the bottom of the garment.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-foreground">Tips</h5>
+                            <ul className="text-sm text-muted-foreground space-y-1">
+                              <li>• Take measurements while wearing form-fitting clothing</li>
+                              <li>• Use a flexible measuring tape</li>
+                              <li>• If between sizes, size up for comfort</li>
+                              <li>• Our sizes are based on Pakistani standards</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
 
                 {/* Size Selection */}
                 <div>

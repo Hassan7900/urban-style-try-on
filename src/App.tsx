@@ -16,6 +16,7 @@ import Auth from "./pages/Auth";
 import TryOn from "./pages/TryOn";
 import Collections from "./pages/Collections";
 import About from "./pages/About";
+import SizeGuide from "./pages/SizeGuide";
 import SellerDashboard from "./pages/SellerDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -40,6 +41,7 @@ const App = () => (
                   <Route path="/try-on" element={<TryOn />} />
                   <Route path="/collections" element={<Collections />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/seller-dashboard" element={<SellerDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

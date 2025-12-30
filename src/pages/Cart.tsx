@@ -152,9 +152,11 @@ const Cart = () => {
                   </div>
 
                   {user ? (
-                    <Button variant="hero" size="lg" className="w-full">
-                      Checkout
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                    <Button variant="hero" size="lg" className="w-full" asChild>
+                      <Link to="/shipping">
+                        Checkout
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
                     </Button>
                   ) : (
                     <div className="space-y-4">

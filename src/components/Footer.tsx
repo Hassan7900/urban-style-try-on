@@ -47,7 +47,12 @@ const Footer = () => {
                   Size Guide
                 </Link>
               </li>
-              {["Shipping", "Returns", "FAQ", "Contact Us"].map((item) => (
+              <li>
+                <Link to="/shipping" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                  Shipping
+                </Link>
+              </li>
+              {["Returns", "FAQ", "Contact Us"].map((item) => (
                 <li key={item}>
                   <Link to="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                     {item}

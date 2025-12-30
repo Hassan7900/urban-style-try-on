@@ -18,6 +18,7 @@ import Collections from "./pages/Collections";
 import About from "./pages/About";
 import SizeGuide from "./pages/SizeGuide";
 import Shipping from "./pages/Shipping";
+import Returns from "./pages/Returns";
 import SellerDashboard from "./pages/SellerDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +45,7 @@ const App = () => (
                   <Route path="/about" element={<About />} />
                   <Route path="/size-guide" element={<SizeGuide />} />
                   <Route path="/shipping" element={<Shipping />} />
+                  <Route path="/returns" element={<Returns />} />
                   <Route path="/seller-dashboard" element={<SellerDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

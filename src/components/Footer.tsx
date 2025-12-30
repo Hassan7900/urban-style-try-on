@@ -52,7 +52,12 @@ const Footer = () => {
                   Shipping
                 </Link>
               </li>
-              {["Returns", "FAQ", "Contact Us"].map((item) => (
+              <li>
+                <Link to="/returns" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                  Returns
+                </Link>
+              </li>
+              {["FAQ", "Contact Us"].map((item) => (
                 <li key={item}>
                   <Link to="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
                     {item}

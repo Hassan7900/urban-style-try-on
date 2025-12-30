@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingBag, User, Menu, X, Search, Sun, Moon } from "lucide-react";
+import { ShoppingBag, User, Menu, X, Search, Sun, Moon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const { totalItems } = useCart();
   const { user, profile, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
@@ -80,10 +81,33 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => signOut()}
+                  onClick={async () => {
+                    setIsSigningOut(true);
+                    try {
+                      await signOut();
+                      // Small delay to ensure auth state updates
+                      setTimeout(() => {
+                        navigate('/');
+                      }, 100);
+                    } catch (error) {
+                      console.error('Sign out failed:', error);
+                      // Still navigate even if there's an error
+                      navigate('/');
+                    } finally {
+                      setIsSigningOut(false);
+                    }
+                  }}
+                  disabled={isSigningOut}
                   className="text-muted-foreground hover:text-foreground"
                 >
-                  Sign Out
+                  {isSigningOut ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Signing Out...
+                    </>
+                  ) : (
+                    'Sign Out'
+                  )}
                 </Button>
               </div>
             ) : (

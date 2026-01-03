@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import CategoryShowcase from "@/components/CategoryShowcase";
 import TryOnBanner from "@/components/TryOnBanner";
+import BundleBanner from "@/components/BundleBanner";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -22,6 +23,7 @@ const Index = () => {
         <main>
           <Hero />
           <FeaturedProducts />
+          <BundleBanner />
           <CategoryShowcase />
           <TryOnBanner />
         </main>

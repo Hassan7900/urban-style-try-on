@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingBag, User, Menu, X, Search, Sun, Moon, Loader2 } from "lucide-react";
+import { ShoppingBag, User, Menu, X, Search, Sun, Moon, Loader2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
@@ -17,6 +18,7 @@ const Header = () => {
   const { totalItems } = useCart();
   const { user, profile, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { wishlistCount } = useWishlist();
   const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -150,6 +152,20 @@ const Header = () => {
                 <User className="h-5 w-5" />
               </Button>
             )}
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/wishlist")}
+              className="relative hidden md:flex"
+            >
+              <Heart className="h-5 w-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-medium">
+                  {wishlistCount}
+                </span>
+              )}
+            </Button>
 
             <Button
               variant="ghost"

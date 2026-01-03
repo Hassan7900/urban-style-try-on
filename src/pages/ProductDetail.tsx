@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewList from "@/components/ReviewList";
@@ -16,11 +17,14 @@ const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === id);
   const { addToCart } = useCart();
+  const { isInWishlist, toggleWishlist, isLoading: wishlistLoading } = useWishlist();
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
   const [selectedColor, setSelectedColor] = useState(product?.colors[0] || "");
   const [quantity, setQuantity] = useState(1);
   const [reviewRefresh, setReviewRefresh] = useState(0);
+
+  const inWishlist = product ? isInWishlist(product.id) : false;
   if (!product) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -299,8 +303,16 @@ const ProductDetail = () => {
                   >
                     Add to Cart
                   </Button>
-                  <Button variant="outline" size="xl">
-                    <Heart className="h-5 w-5" />
+                  <Button
+                    variant="outline"
+                    size="xl"
+                    onClick={() => toggleWishlist(product.id)}
+                    disabled={wishlistLoading}
+                    className={cn(inWishlist && "border-primary text-primary")}
+                  >
+                    <Heart
+                      className={cn("h-5 w-5", inWishlist && "fill-primary")}
+                    />
                   </Button>
                 </div>
               </div>

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingBag, Eye } from "lucide-react";
+import { ShoppingBag, Eye, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/product";
 import { useCart } from "@/contexts/CartContext";
+import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
@@ -14,11 +15,20 @@ interface ProductCardProps {
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
+  const { isInWishlist, toggleWishlist, isLoading } = useWishlist();
+
+  const inWishlist = isInWishlist(product.id);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product, product.sizes[0], product.colors[0]);
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product.id);
   };
 
   return (
@@ -55,6 +65,20 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
               className="rounded-full"
             >
               <ShoppingBag className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="glass"
+              size="icon"
+              onClick={handleWishlistToggle}
+              disabled={isLoading}
+              className={cn(
+                "rounded-full",
+                inWishlist && "bg-primary/20 text-primary"
+              )}
+            >
+              <Heart
+                className={cn("h-5 w-5", inWishlist && "fill-primary")}
+              />
             </Button>
             <Button variant="glass" size="icon" className="rounded-full">
               <Eye className="h-5 w-5" />

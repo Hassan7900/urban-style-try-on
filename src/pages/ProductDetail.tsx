@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
+import ReviewForm from "@/components/ReviewForm";
+import ReviewList from "@/components/ReviewList";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +20,7 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
   const [selectedColor, setSelectedColor] = useState(product?.colors[0] || "");
   const [quantity, setQuantity] = useState(1);
-
+  const [reviewRefresh, setReviewRefresh] = useState(0);
   if (!product) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -106,14 +108,25 @@ const ProductDetail = () => {
 
                 {/* Product Details Tabs */}
                 <Tabs defaultValue="description" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
+                  <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="description">Description</TabsTrigger>
+                    <TabsTrigger value="reviews">Reviews</TabsTrigger>
                     <TabsTrigger value="size-guide">Size Guide</TabsTrigger>
                   </TabsList>
                   <TabsContent value="description" className="mt-6">
                     <p className="text-muted-foreground text-lg leading-relaxed">
                       {product.description}
                     </p>
+                  </TabsContent>
+                  <TabsContent value="reviews" className="mt-6 space-y-6">
+                    <ReviewList
+                      productId={product.id}
+                      refreshTrigger={reviewRefresh}
+                    />
+                    <ReviewForm
+                      productId={product.id}
+                      onReviewSubmitted={() => setReviewRefresh((prev) => prev + 1)}
+                    />
                   </TabsContent>
                   <TabsContent value="size-guide" className="mt-6">
                     <div className="space-y-6">

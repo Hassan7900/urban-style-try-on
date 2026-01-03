@@ -16,12 +16,6 @@ const SellerDashboard = () => {
     totalOrders: 0,
   });
 
-  useEffect(() => {
-    if (profile?.role === 'seller' && user) {
-      fetchStats();
-    }
-  }, [profile, user, fetchStats]);
-
   const fetchStats = useCallback(async () => {
     if (!user) return;
 
@@ -49,6 +43,12 @@ const SellerDashboard = () => {
       console.error('Error fetching stats:', error);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (profile?.role === 'seller' && user) {
+      fetchStats();
+    }
+  }, [profile, user, fetchStats]);
 
   if (profile?.role !== 'seller') {
     return (

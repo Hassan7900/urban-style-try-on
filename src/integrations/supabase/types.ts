@@ -16,100 +16,105 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
-          id: string
+          created_at: string
           first_name: string | null
+          id: string
           last_name: string | null
           phone: string | null
-          role: string
-          created_at: string
+          role: string | null
           updated_at: string
         }
         Insert: {
-          id: string
+          created_at?: string
           first_name?: string | null
+          id: string
           last_name?: string | null
           phone?: string | null
-          role?: string
-          created_at?: string
+          role?: string | null
           updated_at?: string
         }
         Update: {
-          id?: string
+          created_at?: string
           first_name?: string | null
+          id?: string
           last_name?: string | null
           phone?: string | null
-          role?: string
-          created_at?: string
+          role?: string | null
           updated_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       seller_products: {
         Row: {
-          id: string
-          seller_id: string
-          name: string
-          description: string | null
-          price: number
-          original_price: number | null
-          image: string | null
           category: string
-          sizes: string[]
-          colors: string[]
-          in_stock: boolean
-          try_on_compatible: boolean
+          colors: string[] | null
           created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          in_stock: boolean | null
+          name: string
+          original_price: number | null
+          price: number
+          seller_id: string
+          sizes: string[] | null
+          try_on_compatible: boolean | null
           updated_at: string
         }
         Insert: {
-          id?: string
-          seller_id: string
-          name: string
-          description?: string | null
-          price: number
-          original_price?: number | null
-          image?: string | null
           category: string
-          sizes?: string[]
-          colors?: string[]
-          in_stock?: boolean
-          try_on_compatible?: boolean
+          colors?: string[] | null
           created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          in_stock?: boolean | null
+          name: string
+          original_price?: number | null
+          price: number
+          seller_id: string
+          sizes?: string[] | null
+          try_on_compatible?: boolean | null
           updated_at?: string
         }
         Update: {
-          id?: string
-          seller_id?: string
-          name?: string
-          description?: string | null
-          price?: number
-          original_price?: number | null
-          image?: string | null
           category?: string
-          sizes?: string[]
-          colors?: string[]
-          in_stock?: boolean
-          try_on_compatible?: boolean
+          colors?: string[] | null
           created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          in_stock?: boolean | null
+          name?: string
+          original_price?: number | null
+          price?: number
+          seller_id?: string
+          sizes?: string[] | null
+          try_on_compatible?: boolean | null
           updated_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "seller_products_seller_id_fkey"
-            columns: ["seller_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
+      }
+      wishlist: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {

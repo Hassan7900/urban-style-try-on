@@ -1,11 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Package, Sparkles, ArrowRight } from "lucide-react";
+import { Package, Sparkles, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BundleBuilder from "./BundleBuilder";
 
+// Countdown target: 48 hours from first visit (stored in localStorage)
+const getTargetDate = () => {
+  const stored = localStorage.getItem("bundle-offer-end");
+  if (stored) {
+    return new Date(stored);
+  }
+  const target = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  localStorage.setItem("bundle-offer-end", target.toISOString());
+  return target;
+};
+
+const useCountdown = (targetDate: Date) => {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const diff = targetDate.getTime() - Date.now();
+    return Math.max(0, diff);
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const diff = targetDate.getTime() - Date.now();
+      setTimeLeft(Math.max(0, diff));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  return { hours, minutes, seconds, isExpired: timeLeft === 0 };
+};
+
 const BundleBanner = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [targetDate] = useState(() => getTargetDate());
+  const { hours, minutes, seconds, isExpired } = useCountdown(targetDate);
+
+  const TimeBlock = ({ value, label }: { value: number; label: string }) => (
+    <div className="flex flex-col items-center">
+      <div className="bg-background/80 backdrop-blur-sm border border-primary/30 rounded-lg w-14 h-14 flex items-center justify-center">
+        <span className="text-2xl font-bold text-foreground font-mono">
+          {String(value).padStart(2, "0")}
+        </span>
+      </div>
+      <span className="text-xs text-muted-foreground mt-1">{label}</span>
+    </div>
+  );
 
   return (
     <>
@@ -41,6 +87,27 @@ const BundleBanner = () => {
                 <p className="text-muted-foreground text-lg mb-6 max-w-md">
                   Mix and match your favorites! Select any 3 items and unlock an exclusive 20% discount on your entire bundle.
                 </p>
+
+                {/* Countdown Timer */}
+                {!isExpired && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-6"
+                  >
+                    <div className="inline-flex items-center gap-2 text-muted-foreground mb-3">
+                      <Clock className="h-4 w-4 text-primary" />
+                      <span className="text-sm font-medium">Offer ends in:</span>
+                    </div>
+                    <div className="flex items-center gap-2 justify-center lg:justify-start">
+                      <TimeBlock value={hours} label="HRS" />
+                      <span className="text-2xl font-bold text-primary mb-4">:</span>
+                      <TimeBlock value={minutes} label="MIN" />
+                      <span className="text-2xl font-bold text-primary mb-4">:</span>
+                      <TimeBlock value={seconds} label="SEC" />
+                    </div>
+                  </motion.div>
+                )}
 
                 <Button
                   size="lg"

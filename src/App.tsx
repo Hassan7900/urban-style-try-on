@@ -21,6 +21,7 @@ import Shipping from "./pages/Shipping";
 import Returns from "./pages/Returns";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import SellerDashboard from "./pages/SellerDashboard";
+import Wishlist from "./pages/Wishlist";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
                   <Route path="/returns" element={<Returns />} />
                   <Route path="/order-confirmation" element={<OrderConfirmation />} />
                   <Route path="/seller-dashboard" element={<SellerDashboard />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Chatbot />

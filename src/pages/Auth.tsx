@@ -334,6 +334,7 @@ const Auth = () => {
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
                       className="bg-secondary border border-border rounded-lg px-3 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all w-32"
+                      aria-label="Country code selection"
                     >
                       {countryCodes.map((cc) => (
                         <option key={cc.code} value={cc.code}>

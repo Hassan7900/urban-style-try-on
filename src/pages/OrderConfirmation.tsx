@@ -10,36 +10,36 @@ import { CheckCircle, Truck, Package, Clock, MapPin, CreditCard } from "lucide-r
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
-  const [orderNumber] = useState(`URB-${Date.now().toString().slice(-6)}`);
-
-  // Mock order details - in a real app, this would come from context/state
-  const orderDetails = {
-    orderNumber,
-    estimatedDelivery: "Dec 35, 2025",
-    items: [
-      { name: "Urban Hoodie", quantity: 1, price: 2850, image: "/api/placeholder/80/80" },
-      { name: "Premium T-Shirt", quantity: 2, price: 1950, image: "/api/placeholder/80/80" }
-    ],
-    subtotal: 6750,
-    delivery: 250,
-    total: 7000,
-    shippingAddress: {
-      name: "Ahmed Khan",
-      address: "123 Main Street, Gulberg",
-      city: "Lahore, Pakistan",
-      phone: "+92 300 1234567"
-    },
-    paymentMethod: "Cash on Delivery"
-  };
+  const [orderDetails, setOrderDetails] = useState<any | null>(null);
 
   useEffect(() => {
-    // Auto-redirect to shipping tracking after 5 seconds
+    const saved = localStorage.getItem("lastOrder");
+    if (!saved) {
+      navigate("/shop");
+      return;
+    }
+    try {
+      const parsed = JSON.parse(saved);
+      setOrderDetails(parsed);
+    } catch (err) {
+      console.error("Failed to parse order from storage", err);
+      navigate("/shop");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!orderDetails) return;
+    // Auto-redirect to shipping tracking after ~12 seconds
     const timer = setTimeout(() => {
       navigate('/shipping');
-    }, 5000);
+    }, 12000);
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, orderDetails]);
+
+  if (!orderDetails) {
+    return null;
+  }
 
   return (
     <>
@@ -100,7 +100,7 @@ const OrderConfirmation = () => {
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Estimated Delivery: <span className="font-medium text-foreground">{orderDetails.estimatedDelivery}</span>
+                    Estimated Delivery: <span className="font-medium text-foreground">{orderDetails.expectedDelivery || orderDetails.estimatedDelivery}</span>
                   </p>
                 </CardContent>
               </Card>
@@ -112,7 +112,7 @@ const OrderConfirmation = () => {
                     <CardTitle>Order Summary</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {orderDetails.items.map((item, index) => (
+                    {orderDetails.items?.map((item: any, index: number) => (
                       <div key={index} className="flex items-center gap-4">
                         <img
                           src={item.image}
@@ -136,7 +136,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Delivery</span>
-                        <span>Rs. {orderDetails.delivery.toLocaleString()}</span>
+                        <span>Rs. {orderDetails.deliveryFee?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between text-lg font-semibold">
                         <span>Total</span>
@@ -157,10 +157,10 @@ const OrderConfirmation = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-1">
-                        <p className="font-medium text-foreground">{orderDetails.shippingAddress.name}</p>
-                        <p className="text-muted-foreground">{orderDetails.shippingAddress.address}</p>
-                        <p className="text-muted-foreground">{orderDetails.shippingAddress.city}</p>
-                        <p className="text-muted-foreground">{orderDetails.shippingAddress.phone}</p>
+                        <p className="font-medium text-foreground">{orderDetails.customerName}</p>
+                        <p className="text-muted-foreground">{orderDetails.address}</p>
+                        <p className="text-muted-foreground">{orderDetails.city}</p>
+                        <p className="text-muted-foreground">{orderDetails.customerPhone}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -175,7 +175,7 @@ const OrderConfirmation = () => {
                     <CardContent>
                       <p className="font-medium text-foreground">{orderDetails.paymentMethod}</p>
                       <p className="text-sm text-muted-foreground">
-                        You will pay when your order is delivered to your doorstep.
+                        Payment status: {orderDetails.paymentStatus || 'processing'}
                       </p>
                     </CardContent>
                   </Card>
@@ -223,7 +223,7 @@ const OrderConfirmation = () => {
               {/* Action Buttons */}
               <div className="text-center space-y-4">
                 <p className="text-muted-foreground">
-                  You will be redirected to order tracking in <span className="font-medium text-foreground">5 seconds</span>...
+                  You will be redirected to order tracking in <span className="font-medium text-foreground">12 seconds</span>...
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button variant="hero" size="lg" asChild>

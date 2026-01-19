@@ -153,8 +153,8 @@ const Cart = () => {
 
                   {user ? (
                     <Button variant="hero" size="lg" className="w-full" asChild>
-                      <Link to="/order-confirmation">
-                        Checkout
+                      <Link to="/checkout">
+                        Proceed to Checkout
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>

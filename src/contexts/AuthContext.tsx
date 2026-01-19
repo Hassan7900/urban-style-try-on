@@ -14,7 +14,7 @@ interface AuthContextType {
     firstName: string;
     lastName: string;
     phone: string;
-    role: 'buyer' | 'seller';
+    role: 'buyer' | 'seller' | 'admin';
   }) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -84,7 +84,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     firstName: string;
     lastName: string;
     phone: string;
-    role: 'buyer' | 'seller';
+    role: 'buyer' | 'seller' | 'admin';
   }) => {
     const redirectUrl = `${window.location.origin}/`;
 

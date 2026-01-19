@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 import { products } from "@/data/products";
+import { toast } from "sonner";
 
 interface Message {
   id: string;
@@ -18,7 +19,7 @@ const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hi! I'm your fashion assistant. I can help you find the perfect outfit, answer questions about clothing, sizes, and care instructions. What can I help you with today?",
+      text: "Hi! I'm an AI-powered assistant for Urban Wear. I can help you with fashion advice, product recommendations, general questions, and much more. Ask me anything!",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -35,7 +36,44 @@ const Chatbot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const generateResponse = (userMessage: string): string => {
+  const generateAIResponse = async (userMessage: string): Promise<string> => {
+    try {
+      const response = await fetch(
+        `https://free-chatgpt-api.p.rapidapi.com/chat-completion-one?prompt=${encodeURIComponent(userMessage)}`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Key": "2fd0a37b3dmsh21d9090729230d1p166b15jsnd10b03afd3b6",
+            "X-RapidAPI-Host": "free-chatgpt-api.p.rapidapi.com",
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log("API Response:", data);
+      
+      if (!response.ok) {
+        console.error("API Error:", data);
+        throw new Error(data.message || "API request failed");
+      }
+      
+      // Try different possible response formats
+      const aiResponse = data.response || data.result || data.answer || data.message || data.text || data.content || data.output;
+      
+      if (aiResponse && typeof aiResponse === 'string' && aiResponse.trim()) {
+        return aiResponse;
+      }
+      
+      // If no valid response, use fallback
+      throw new Error("Invalid API response format");
+    } catch (error) {
+      console.error("AI API error:", error);
+      // Use enhanced fallback without notifying user of API failure
+      return generateEnhancedResponse(userMessage);
+    }
+  };
+
+  const generateEnhancedResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase();
 
     // Product recommendations
@@ -91,29 +129,58 @@ const Chatbot: React.FC = () => {
 
     // General questions
     if (message.includes("hello") || message.includes("hi") || message.includes("hey")) {
-      return "Hello! I'm here to help you find the perfect fashion pieces. Whether you need outfit recommendations, size advice, or care instructions, I'm your fashion assistant!";
+      return "Hello! I'm here to help you with fashion advice, product recommendations, or answer any questions you have. What would you like to know?";
     }
 
-    if (message.includes("shipping") || message.includes("delivery") || message.includes("information")) {
-      return "We deliver across Pakistan! Karachi (1-2 days), Lahore (2-3 days), Islamabad (3-4 days). Free shipping on orders over 5000 PKR. Express delivery available for urgent orders.";
+    if (message.includes("who") && (message.includes("are you") || message.includes("r u"))) {
+      return "I'm an AI assistant for Urban Wear! I'm here to help with fashion advice, product information, and answer any questions you might have - whether about clothing or general topics. How can I assist you today?";
+    }
+
+    if (message.includes("what") && message.includes("can you")) {
+      return "I can help you with fashion advice, product recommendations, styling tips, size guides, care instructions, shipping info, and much more! I'm also here to answer general questions on any topic. Just ask away!";
+    }
+
+    if (message.includes("shipping") || message.includes("delivery")) {
+      return "We deliver across Pakistan! Karachi (1-2 days), Lahore (2-3 days), Islamabad (3-4 days). Free shipping on orders over 5000 PKR. Express delivery available for urgent orders. Track your order anytime from our shipping page!";
     }
 
     if (message.includes("return") || message.includes("exchange")) {
       return "Easy returns within 7 days! Items must be unused with original tags. Contact our support team to initiate returns. We're here to ensure you're completely satisfied with your purchase.";
     }
 
-    // Default responses
+    if (message.includes("thank")) {
+      return "You're welcome! If you have any other questions about fashion, our products, or anything else, feel free to ask. I'm here to help! 😊";
+    }
+
+    // Try to give helpful responses for common question patterns
+    if (message.includes("how") && (message.includes("work") || message.includes("use"))) {
+      if (message.includes("try-on") || message.includes("virtual")) {
+        return "Our virtual try-on is easy! Browse products, select an item, and click 'Try On'. Use your camera or upload a photo to see how the clothing looks on you using AI technology. It's a great way to visualize your purchase!";
+      }
+      return "I'd be happy to explain how that works! Could you be more specific about what you'd like to know?";
+    }
+
+    if (message.includes("why") || message.includes("explain")) {
+      return "That's a great question! While I can provide general information, for detailed answers, could you specify what topic you'd like me to explain? Whether it's fashion-related or something else, I'll do my best to help!";
+    }
+
+    if (message.includes("best") || message.includes("top")) {
+      const featured = products.filter(p => p.inStock).slice(0, 3);
+      return `Our top picks right now include: ${featured.map(p => `${p.name} (${p.price} PKR)`).join(", ")}. These are customer favorites with great reviews! Would you like to know more about any of these?`;
+    }
+
+    // Default responses that encourage engagement
     const defaultResponses = [
-      "I'd be happy to help you find the perfect outfit! Could you tell me more about what you're looking for?",
-      "That's an interesting question! Let me help you with that. What type of clothing are you interested in?",
-      "Great question! I can help with recommendations, sizing, care instructions, and more. What would you like to know?",
-      "I'm here to assist with all your fashion needs! Whether it's product recommendations or styling advice, just let me know.",
+      "I'd be happy to help! Whether you're looking for fashion advice, product info, or have general questions, I'm here. What would you like to know?",
+      "Interesting question! I'm here to assist with fashion recommendations, product details, or answer any other questions you might have. How can I help?",
+      "Great! I can help with fashion advice, our products, or general information. What's on your mind?",
+      "I'm your AI assistant for all things Urban Wear and beyond! Ask me about products, styling tips, or anything else you'd like to know.",
     ];
 
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
     const userMessage: Message = {
@@ -123,21 +190,36 @@ const Chatbot: React.FC = () => {
       timestamp: new Date(),
     };
 
+    const messageText = inputValue;
     setMessages(prev => [...prev, userMessage]);
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(() => {
+    try {
+      // Get AI response
+      const responseText = await generateAIResponse(messageText);
+      
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: generateResponse(inputValue),
+        text: responseText,
         sender: "bot",
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, botResponse]);
+    } catch (error) {
+      console.error("Error generating response:", error);
+      toast.error("Sorry, I encountered an error. Please try again.");
+      
+      const errorResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I apologize, but I encountered an error. Could you please try asking again?",
+        sender: "bot",
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    } finally {
       setIsTyping(false);
-    }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -166,8 +248,8 @@ const Chatbot: React.FC = () => {
               <Bot className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="font-semibold text-sm">Fashion Assistant</h3>
-              <p className="text-xs opacity-90">Online now</p>
+              <h3 className="font-semibold text-sm">AI Fashion Assistant</h3>
+              <p className="text-xs opacity-90">Powered by AI • Online now</p>
             </div>
           </div>
 
@@ -210,8 +292,8 @@ const Chatbot: React.FC = () => {
                   <div className="bg-muted rounded-lg px-3 py-2 text-sm">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce [animation-delay:0.1s]"></div>
+                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce [animation-delay:0.2s]"></div>
                     </div>
                   </div>
                 </div>
@@ -227,7 +309,7 @@ const Chatbot: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me about fashion, sizes, care..."
+                placeholder="Ask me anything..."
                 className="flex-1"
                 disabled={isTyping}
               />

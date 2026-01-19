@@ -1,12 +1,24 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { Truck, Package, MapPin, Clock, CheckCircle, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 
 interface ShippingOrder {
   id: string;
@@ -30,9 +42,12 @@ interface ShippingOrder {
 
 const Shipping = () => {
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
+  const [isSupportDialogOpen, setIsSupportDialogOpen] = useState(false);
+  const [supportEmail, setSupportEmail] = useState("");
+  const [supportProblem, setSupportProblem] = useState("");
 
   // Demo shipping data
-  const shippingOrders: ShippingOrder[] = [
+  const [shippingOrders, setShippingOrders] = useState<ShippingOrder[]>([
     {
       id: "1",
       orderNumber: "URB-2025-001",
@@ -122,7 +137,42 @@ const Shipping = () => {
         phone: "+92 304 7788990"
       }
     }
-  ];
+    ]);
+
+    // Load most recent checkout order into shipping list
+    useEffect(() => {
+      const saved = localStorage.getItem("lastOrder");
+      if (!saved) return;
+      try {
+        const order = JSON.parse(saved);
+        setShippingOrders((prev) => {
+          const exists = prev.some((o) => o.orderNumber === order.orderNumber);
+          if (exists) return prev;
+          const newOrder: ShippingOrder = {
+            id: order.orderNumber,
+            orderNumber: order.orderNumber,
+            status: "processing",
+            estimatedDelivery: order.expectedDelivery || order.estimatedDelivery || "TBD",
+            trackingNumber: `TRK-${order.orderNumber?.slice(-6) || Math.random().toString().slice(2, 8)}`,
+            progress: 20,
+            items: (order.items || []).map((item: any) => ({
+              name: item.name,
+              quantity: item.quantity,
+              image: item.image || "/api/placeholder/80/80",
+            })),
+            shippingAddress: {
+              name: order.customerName || "Customer",
+              address: order.address,
+              city: order.city,
+              phone: order.customerPhone,
+            },
+          };
+          return [newOrder, ...prev];
+        });
+      } catch (err) {
+        console.error("Failed to add last order to shipping", err);
+      }
+    }, []);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -158,6 +208,30 @@ const Shipping = () => {
     return status.split('-').map(word =>
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');
+  };
+
+  const handleSupportSubmit = () => {
+    if (!supportEmail || !supportProblem) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    // Create mailto link
+    const subject = encodeURIComponent("Urban Wear - Order Support Request");
+    const body = encodeURIComponent(`Customer Email: ${supportEmail}\n\nProblem Description:\n${supportProblem}`);
+    window.location.href = `mailto:hassaan4352@gmail.com?subject=${subject}&body=${body}`;
+
+    toast.success("Opening email client...");
+    setIsSupportDialogOpen(false);
+    setSupportEmail("");
+    setSupportProblem("");
+  };
+
+  const handleFAQClick = () => {
+    // Scroll to bottom where chatbot is (or trigger chatbot to open)
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    // If there's a chatbot component that can be programmatically opened, trigger it
+    toast.info("Scroll down to chat with our AI assistant!");
   };
 
   return (
@@ -345,10 +419,10 @@ const Shipping = () => {
                   Our customer service team is here to help with any shipping or delivery questions.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button variant="hero" size="lg">
+                  <Button variant="hero" size="lg" onClick={() => setIsSupportDialogOpen(true)}>
                     Contact Support
                   </Button>
-                  <Button variant="outline" size="lg">
+                  <Button variant="outline" size="lg" onClick={handleFAQClick}>
                     Shipping FAQ
                   </Button>
                 </div>
@@ -356,6 +430,48 @@ const Shipping = () => {
             </div>
           </div>
         </main>
+
+        {/* Contact Support Dialog */}
+        <Dialog open={isSupportDialogOpen} onOpenChange={setIsSupportDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Contact Support</DialogTitle>
+              <DialogDescription>
+                Send us your shipping or delivery questions and we'll get back to you as soon as possible.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Your Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  value={supportEmail}
+                  onChange={(e) => setSupportEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="problem">Describe Your Problem</Label>
+                <Textarea
+                  id="problem"
+                  placeholder="Please describe your shipping or delivery issue..."
+                  className="min-h-[120px]"
+                  value={supportProblem}
+                  onChange={(e) => setSupportProblem(e.target.value)}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsSupportDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="hero" onClick={handleSupportSubmit}>
+                Send Email
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         <Footer />
       </div>
